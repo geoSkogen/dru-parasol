@@ -1,0 +1,6 @@
+parasol:
+  version: 1.0
+  js:
+    js/skeleton.js: {}
+  css:
+    css/skeleton.css: {}

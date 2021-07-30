@@ -1,0 +1,7 @@
+name: Drupal Parasol Module
+description: Creates a page for hand-coded HTML, JS & CSS.
+package: Custom
+type: module
+version: 1.0
+core: 8.x
+core_version_requirement: ^8 || ^9

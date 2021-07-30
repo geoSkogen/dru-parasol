@@ -1,0 +1,7 @@
+parasol.content_page:
+  path: '/parasol'
+  defaults:
+    _controller: '\Drupal\parasol\Controller\ParasolController::helloContent'
+    _title: 'A Contentful Page in Dupal'
+  requirements:
+    _permission: 'access content'
