@@ -3,7 +3,7 @@ console.log('this is skeleton jones')
 
 function stray_light(el,n,arg) {
   el.style.opacity = n
-  n += (arg) ? 0.05 : -0.05
+  n += (arg) ? 0.025 : -0.025
   n = (n <= 0.02) ? 0 : n
   n = (n >= 0.98) ? 1 : n
   return n

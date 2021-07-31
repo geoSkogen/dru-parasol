@@ -28,10 +28,8 @@ class ParasolBlock extends BlockBase {
     else {
       $name = $this->t('to no one');
     }
-
-    //drupal_add_js(drupal_get_path('module', 'drupal_parasol') . 'js/skeleton.js');
-
-    return [
+    $csspath = drupal_get_path('module', 'parasol') . '/css/skeleton.css';
+    $attach = [
       '#title' => 'Another Contentful Drupal Block',
       '#markup' => '<h1 class="translate" data-toggle="1" data="meet">HELLO</h1>
                     <h1 class="translate" data-toggle="1" data="JavaScript">DRUPAL</h1>
@@ -41,7 +39,10 @@ class ParasolBlock extends BlockBase {
                     <h1 class="translate" data-toggle="1" data="Drupal">JAVASCRIPT</h1>
                     <h1 class="translate" data-toggle="1" data="hello">MEET</h1>
                     <h1 class="translate" data-toggle="1" data="JavaScript">DRUPAL</h1>'
+    //
     ];
+
+    return $attach;
   }
 
   public function blockForm($form, FormStateInterface $form_state) {

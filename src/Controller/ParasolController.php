@@ -15,19 +15,12 @@ class ParasolController extends ControllerBase {
    *   A simple renderable array.
    */
   public function helloContent() {
+    /*
+    $jspath = drupal_get_path('module', 'parasol') . '/js/skeleton.js';
+    $csspath = drupal_get_path('module', 'parasol') . '/css/skeleton.css';
+    */
+    $attach['#attached']['library'][] = 'parasol/parasol';
 
-    $path = drupal_get_path('module', 'parasol') . '/js/skeleton.js';
-
-    $attach['#attached']['html_head'][] = [
-
-      [
-        '#tag' => 'script',
-        '#attributes' => [
-          '#type' => 'application/javascript',
-          'src'=> $path
-        ]
-      ]
-    ];
     return $attach;
   }
 

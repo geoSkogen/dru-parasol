@@ -3,4 +3,5 @@ parasol:
   js:
     js/skeleton.js: {}
   css:
-    css/skeleton.css: {}
+    layout:
+      css/skeleton.css: {}
