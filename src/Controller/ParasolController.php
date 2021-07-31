@@ -1,5 +1,5 @@
 <?php
-namespace Drupal\drupal_parasol\Controller;
+namespace Drupal\parasol\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 
@@ -16,7 +16,7 @@ class ParasolController extends ControllerBase {
    */
   public function helloContent() {
 
-    $path = drupal_get_path('module', 'drupal_parasol') . '/js/skeleton.js';
+    $path = drupal_get_path('module', 'parasol') . '/js/skeleton.js';
 
     $attach['#attached']['html_head'][] = [
 

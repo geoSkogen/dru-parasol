@@ -1,17 +1,17 @@
 <?php
 
-namespace Drupal\drupal_parasol\Plugin\Block;
+namespace Drupal\parasol\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Provides a 'Hello' Block.
+ * Provides a 'Parasol' Block.
  *
  * @Block(
- *   id = "hello_block",
- *   admin_label = @Translation("Hello block"),
- *   category = @Translation("Hello World"),
+ *   id = "parasol_block",
+ *   admin_label = @Translation("Parasol Block"),
+ *   category = @Translation("hello parasol"),
  * )
  */
 class ParasolBlock extends BlockBase {
@@ -22,8 +22,8 @@ class ParasolBlock extends BlockBase {
   public function build() {
     $config = $this->getConfiguration();
 
-    if (!empty($config['hello_block_name'])) {
-      $name = $config['hello_block_name'];
+    if (!empty($config['parasol_block_name'])) {
+      $name = $config['parasol_block_name'];
     }
     else {
       $name = $this->t('to no one');
@@ -49,11 +49,11 @@ class ParasolBlock extends BlockBase {
 
    $config = $this->getConfiguration();
 
-   $form['hello_block_name'] = [
+   $form['parasol_block_name'] = [
      '#type' => 'textfield',
      '#title' => $this->t('Who'),
      '#description' => $this->t('Who do you want to say hello to?'),
-     '#default_value' => $config['hello_block_name'] ?? '',
+     '#default_value' => $config['parasol_block_name'] ?? '',
    ];
 
    return $form;
@@ -65,15 +65,15 @@ class ParasolBlock extends BlockBase {
  public function blockSubmit($form, FormStateInterface $form_state) {
    parent::blockSubmit($form, $form_state);
    $values = $form_state->getValues();
-   $this->configuration['hello_block_name'] = $values['hello_block_name'];
+   $this->configuration['parasol_block_name'] = $values['parasol_block_name'];
  }
 
  /**
   * {@inheritdoc}
   */
  public function blockValidate($form, FormStateInterface $form_state) {
-   if($form_state->getValue('hello_block_name') === 'John'){
-     $form_state->setErrorByName('hello_block_name', $this->t('You can not say hello to John.'));
+   if($form_state->getValue('parasol_block_name') === 'John'){
+     $form_state->setErrorByName('parasol_block_name', $this->t('You can not say hello to John.'));
    }
  }
 
