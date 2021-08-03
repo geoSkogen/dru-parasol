@@ -2,6 +2,8 @@ parasol:
   version: 1.0
   js:
     js/skeleton.js: {}
-  css:
-    layout:
-      css/skeleton.css: {}
+
+parasol_catalog:
+  version: 1.0
+  js:
+    js/catalog.js: {}

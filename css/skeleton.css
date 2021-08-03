@@ -1,5 +1,41 @@
+a:link, a:active, a:visited, a:hover {
+  text-decoration: none;
+  color: cornflowerblue;
+}
+
+body > div.dialog-off-canvas-main-canvas > div:nth-child(1) {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+nav.contextual-region ul, #block-wafer-breadcrumbs > nav > ol {
+  padding-inline-start: 0px;
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  list-style: none;
+  margin: 1em;
+  font-family: 'Trebuchet MS', Helvetica, Arial, sans-serif;
+  font-size: 24px;
+}
+
+h1.js-quickedit-page-title {
+  font-style: italic;
+  opacity: 0.44;
+  font-size: 18px;
+  text-align: center;
+}
+
 h1.translate {
   font-size: 30px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 800;
+}
+
+#block-wafer-parasolblock > h2 {
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 800;
+  opacity:0.8;
+  text-align: center;
 }

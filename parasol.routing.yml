@@ -2,6 +2,15 @@ parasol.content_page:
   path: '/parasol'
   defaults:
     _controller: '\Drupal\parasol\Controller\ParasolController::helloContent'
-    _title: 'A Contentful Page in Dupal'
+    _title: 'The Parasol Module - the /parasol route'
+  requirements:
+    _permission: 'access content'
+
+
+parasol.catalog_page:
+  path: '/catalog'
+  defaults:
+    _controller: '\Drupal\parasol\Controller\ParasolCatalogController::initView'
+    _title: 'Ghost in a Jar'
   requirements:
     _permission: 'access content'

@@ -26,20 +26,14 @@ class ParasolBlock extends BlockBase {
       $name = $config['parasol_block_name'];
     }
     else {
-      $name = $this->t('to no one');
+      $name = $this->t('no one');
     }
-    $csspath = drupal_get_path('module', 'parasol') . '/css/skeleton.css';
+
     $attach = [
-      '#title' => 'Another Contentful Drupal Block',
-      '#markup' => '<h1 class="translate" data-toggle="1" data="meet">HELLO</h1>
-                    <h1 class="translate" data-toggle="1" data="JavaScript">DRUPAL</h1>
-                    <h1 class="translate" data-toggle="1" data="hello">MEET</h1>
-                    <h1 class="translate" data-toggle="1" data="Drupal">JAVASCRIPT</h1>
-                    <h1 class="translate" data-toggle="1" data="meet">HELLO</h1>
-                    <h1 class="translate" data-toggle="1" data="Drupal">JAVASCRIPT</h1>
-                    <h1 class="translate" data-toggle="1" data="hello">MEET</h1>
-                    <h1 class="translate" data-toggle="1" data="JavaScript">DRUPAL</h1>'
-    //
+      '#markup' => $this->t('This Parasol Custom Block Value is @name',[
+        '@name' => $name
+      ])
+
     ];
 
     return $attach;
@@ -73,8 +67,8 @@ class ParasolBlock extends BlockBase {
   * {@inheritdoc}
   */
  public function blockValidate($form, FormStateInterface $form_state) {
-   if($form_state->getValue('parasol_block_name') === 'John'){
-     $form_state->setErrorByName('parasol_block_name', $this->t('You can not say hello to John.'));
+   if($form_state->getValue('parasol_block_name') === ''){
+     $form_state->setErrorByName('parasol_block_name', $this->t('Field cannot be blank'));
    }
  }
 
