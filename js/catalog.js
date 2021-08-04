@@ -11,7 +11,20 @@ const app = {
   list : { dom_nodes: [],
 
     shuffle: function (data_row) {
-      console.log('app.list.shuffle()')
+
+      const result_arr = []
+      for (let i = Number(data_row.index); i < app.data.catalog_items.length; i++) {
+        app.data.catalog_items[i]
+        result_arr.push(app.data.catalog_items[i])
+        console.log(i)
+      }
+      for (let i = 0; i < Number(data_row.index); i++) {
+        result_arr.push(app.data.catalog_items[i])
+        console.log(i)
+      }
+      console.log("shuffled arr")
+      console.log(result_arr)
+      app.data.catalog_items = result_arr
     }
   },
 
@@ -19,11 +32,13 @@ const app = {
 
     dom_node : document.querySelector('#parasol-catalog-selector'),
 
-    show_item : function (valid_row) {
+    show_item : function (valid_row, row_index) {
       //
       let list_item = document.createElement('li')
+      let anchor_tag = document.createElement('a')
       let img_tag = document.createElement('img')
       let info_box = document.createElement('div')
+      let slug = valid_row.title.replace(/\s/g,'-').toLowerCase()
 
       Object.keys(valid_row).forEach( (key) => {
 
@@ -31,52 +46,68 @@ const app = {
           img_tag.src = 'modules/dru-parasol/img/' + valid_row[key] + '.jpg'
           //
         } else {
-          let content = document.createTextNode(valid_row[key])
-          let line = document.createElement('p')
-          line.setAttribute('meta',key)
-          line.className = 'product-info-line ' + key
+          if (key!='index') {
+            let content = document.createTextNode(valid_row[key])
+            let line = document.createElement('p')
+            line.setAttribute('meta',key)
+            line.className = 'product-info-line ' + key
 
-          line.appendChild(content)
-          info_box.appendChild(line)
+            line.appendChild(content)
+            info_box.appendChild(line)
+          }
         }
       })
 
       info_box.className = 'product-info-box'
       img_tag.className = 'product-image'
+      valid_row.index = row_index
 
       list_item.appendChild(img_tag)
       list_item.appendChild(info_box)
       list_item.setAttribute('meta',JSON.stringify(valid_row))
       list_item.className = 'catalog-list-item flex-row flex-between'
-      list_item.id = valid_row.title
 
-      return list_item
+      anchor_tag.className = 'product-nav-anchor'
+      anchor_tag.href = '#' + slug
+      anchor_tag.appendChild(list_item)
+
+      return anchor_tag
     }
 
   },
 
   detail : {
 
-    dom_node: document.querySelector('#parasol-catalog-detail'),
     img_node: document.querySelector('#catalog-detail-image'),
     meta_node: document.querySelector('#product-detail-meta'),
     title_node: document.querySelector('#catalog-detail-title'),
 
     show : function (data_row) {
+
       //
-      let title_text = document.createTextNode(data_row.title + ' | ' + data_row.author)
+      let title_text = document.createTextNode(data_row.title)
+      let subtitle_text = document.createTextNode(data_row.author)
+      let title_div = document.createElement('div')
+      let subtitle_div = document.createElement('div')
+      let main_props = ['title','author','image','index']
+
+      title_div.appendChild(title_text)
+      subtitle_div.appendChild(subtitle_text)
 
       this.meta_node.innerHTML = ''
       this.title_node.innerHTML = ''
       this.img_node.src = 'modules/dru-parasol/img/' + data_row.image + '-detail.jpg'
-      this.title_node.appendChild(title_text)
+
+      this.title_node.appendChild(title_div)
+      this.title_node.appendChild(subtitle_div)
 
       Object.keys(data_row).forEach( (key) => {
 
-        if (key != 'title' && key != 'author') {
+        if ( main_props.indexOf(key)===-1 ) {
           let el = document.createElement('div')
           let meta_text = document.createTextNode(data_row[key])
 
+          el.className = 'meta-detail'
           el.setAttribute('meta',key + '-detail')
           el.appendChild(meta_text)
           this.meta_node.appendChild(el)
@@ -87,21 +118,23 @@ const app = {
 
   init : function (data, reset) {
 
+    var i = 0
+    this.select.dom_node.innerHTML = ''
+
     data.forEach( (row) => {
 
       let valid_row = (reset) ? row : this.valid_row(row)
-      let list_item = this.select.show_item(valid_row)
+      let list_item = this.select.show_item( valid_row, i )
 
       this.list.dom_nodes = []
       this.list.dom_nodes.push( list_item )
 
       if (!reset) {
         this.data.catalog_items.push( valid_row )
-      } else {
-        this.select.dom_node.innerHTML = ''
       }
 
       this.select.dom_node.appendChild(list_item)
+      i++
     })
   },
 
@@ -117,6 +150,24 @@ const app = {
   }
 }
 
+function register_app_events() {
+  document.querySelectorAll('.catalog-list-item').forEach( (list_item) => {
+    //
+    list_item.addEventListener('click', function (event) {
+      //
+      let data_obj = JSON.parse( this.getAttribute('meta') )
+
+      console.log('list item clicked')
+      console.log(data_obj)
+      //
+
+      app.list.shuffle( data_obj )
+      app.detail.show( data_obj )
+      app.init( app.data.catalog_items, true )
+      register_app_events()
+    })
+  })
+}
 // MAIN
 window.addEventListener('load', () => {
   xhttp = new XMLHttpRequest();
@@ -129,25 +180,15 @@ window.addEventListener('load', () => {
     if (this.readyState == 4 && this.status == 200) {
 
       resp = this.responseText
-      console.log(resp)
-      // Render the DOM
+      //
+      // Render the catalog DOM
       app.init( JSON.parse(resp), false)
-      // set a placeholder detail view
+      //
+      // Set a placeholder for the detail view
       app.detail.show( JSON.parse(resp)[0] )
       //
-      document.querySelectorAll('.catalog-list-item').forEach( (list_item) => {
-        //
-        list_item.addEventListener('click', function (event) {
-          //
-          let data_obj = JSON.parse( this.getAttribute('meta') )
-
-          console.log('list item clicked')
-          console.log(data_obj)
-          //
-          app.list.shuffle( data_obj )
-          app.detail.show( data_obj )
-        })
-      })
+      //
+      register_app_events()
     }
   }
   xhttp.send()

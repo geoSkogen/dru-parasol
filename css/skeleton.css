@@ -1,6 +1,6 @@
 a:link, a:active, a:visited, a:hover {
   text-decoration: none;
-  color: cornflowerblue;
+  //color: cornflowerblue;
 }
 
 body > div.dialog-off-canvas-main-canvas > div:nth-child(1) {

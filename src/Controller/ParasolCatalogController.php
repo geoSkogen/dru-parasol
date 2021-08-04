@@ -20,19 +20,37 @@ class ParasolCatalogController extends ControllerBase {
 
     $attach['#attached']['library'][] = 'parasol/parasol_catalog';
     $attach['#title'] = 'The Parasol Catalog Demo';
-    $attach['#markup'] = '<div id="parasol-catalog-wrapper" class="flex-row flex-center">
+    $attach['#markup'] = '<div id="parasol-detail-modal-wrapper" class="flex-row flex-center">
+                            <div class="relshell">
+                              <article id="product-detail-modal" class="modal">
+                                <div class="flex-row flex-end"><div class="close-modal">&times;</div></div>
+                              </article>
+                            </div>
+                          </div>
+
+                          <div id="parasol-catalog-wrapper" class="flex-row flex-center">
+
                             <div id="parasol-catalog-detail-wrapper" class-"flex-row flex-center">
                               <article id="parasol-catalog-detail" class="product-schema">
                                 <h2 id="catalog-detail-title" class="noshout"></h2>
                                 <img src="#" id="catalog-detail-image" />
                                 <section id="product-detail-meta" class="wristband">
-
+                                <!-- -->
                                 </section>
                               </article>
                             </div>
+
                             <div id="parasol-catalog-select-wrapper" class="flex-col flex-start">
+
+                              <div class="relshell">
+                                <section id="product-select-scroll-nav" class="toolkit">
+                                  <p id="scroll-up" class="scroll-nav">UP</p>
+                                  <p id="scroll-down" class="scroll-nav">DOWN</p>
+                                </section>
+                              </div>
+
                               <ul id="parasol-catalog-selector">
-                              
+                              <!-- -->
                               </ul>
                             </div>
                           </div>';
