@@ -3,6 +3,17 @@
   width: 100%;
 }
 
+#relshell-scroll {
+  height: 60px;
+  width: 300px;
+}
+
+@media only screen and (min-width: 772px) {
+  #relshell-scroll {
+    width: 90px;
+  }
+}
+
 .modal {
   position: absolute;
 }
@@ -58,11 +69,26 @@ p.title {
 #product-select-scroll-nav {
   position: absolute;
   left: 45%;
-  top: -30px;
+  top: -6px;
+}
+
+@media only screen and (min-width: 772px) {
+  #product-select-scroll-nav {
+    top: 60px;
+  }
 }
 
 .scroll-nav {
   cursor: pointer;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+}
+
+#scroll-up-icon,#scroll-down-icon {
+  font-size: 40px;
+  opacity: 0.66;
 }
 
 li.catalog-list-item {

@@ -31,6 +31,23 @@ const app = {
   select : {
 
     dom_node : document.querySelector('#parasol-catalog-selector'),
+    scroll_nodes: {
+      up: document.querySelector('#product-select-scroll-up') ,
+      down: document.querySelector('#product-select-scroll-down')
+    },
+
+    scroll : function (arg,json) {
+      const row_indices = {
+        'up' : app.data.catalog_items.length-1,
+        'down' : 1
+      }
+      const data_row = json ? JSON.parse(json) : JSON.parse(
+        document.querySelectorAll('.catalog-list-item')[row_indices[arg]].getAttribute('meta')
+      )
+      app.list.shuffle(data_row)
+      app.init(app.data.catalog_items, true)
+      register_app_events(true)
+    },
 
     show_item : function (valid_row, row_index) {
       //
@@ -150,23 +167,30 @@ const app = {
   }
 }
 
-function register_app_events() {
+function register_app_events(reset) {
+
   document.querySelectorAll('.catalog-list-item').forEach( (list_item) => {
     //
     list_item.addEventListener('click', function (event) {
       //
-      let data_obj = JSON.parse( this.getAttribute('meta') )
+      let json_string = this.getAttribute('meta')
 
       console.log('list item clicked')
-      console.log(data_obj)
+      console.log(json_string)
       //
-
-      app.list.shuffle( data_obj )
-      app.detail.show( data_obj )
-      app.init( app.data.catalog_items, true )
-      register_app_events()
+      app.select.scroll(null, json_string)
+      app.detail.show( JSON.parse(json_string))
     })
   })
+
+  if (!reset) {
+    ['up','down'].forEach( (dir) => {
+      app.select.scroll_nodes[dir].addEventListener('click', function () {
+        console.log('got scroll node click ' + dir)
+        app.select.scroll(dir,null)
+      })
+    })
+  }
 }
 // MAIN
 window.addEventListener('load', () => {
@@ -188,7 +212,7 @@ window.addEventListener('load', () => {
       app.detail.show( JSON.parse(resp)[0] )
       //
       //
-      register_app_events()
+      register_app_events(false)
     }
   }
   xhttp.send()
