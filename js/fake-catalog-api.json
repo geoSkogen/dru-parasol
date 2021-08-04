@@ -1,0 +1,44 @@
+[
+  {
+    "title":"Radian Futura",
+    "author":"Upsilon Acrux",
+    "date":"2010",
+    "label":"none",
+    "image": "placeholder"
+  },
+  {
+    "title" : "Choirs of the Eye",
+    "author" : "Kayo Dot",
+    "date" : "2004",
+    "label": "Tzakik",
+    "image": "placeholder"
+  },
+  {
+    "title":"Kobaia",
+    "author":"Magma",
+    "date":"1971",
+    "label":"none",
+    "image": "placeholder"
+  },
+  {
+    "title":"First Utterance",
+    "author":"Comus",
+    "date":"1972",
+    "label":"none",
+    "image": "placeholder"
+  },
+  {
+    "title":"Dead as Dreams",
+    "author":"Weakling",
+    "date":"2004",
+    "label":"none",
+    "image": "placeholder"
+  },
+  {
+    "title":"August Engine",
+    "author":"Hammers of Misfortune",
+    "date":"2007",
+    "label":"none",
+    "image": "placeholder"
+  }
+]

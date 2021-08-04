@@ -6,4 +6,8 @@ parasol:
 parasol_catalog:
   version: 1.0
   js:
+    js/fake-catalog-api.json: {}
     js/catalog.js: {}
+  css:
+    theme:
+      css/catalog.css: {}

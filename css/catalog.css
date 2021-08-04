@@ -1,0 +1,36 @@
+#parasol-catalog-wrapper {
+
+}
+
+#parasol-catalog-select-wrapper {
+
+}
+
+#parasol-catalog-detail {
+
+}
+
+ul#parasol-catalog-selector {
+  list-style: none;
+}
+
+p.product-info-line {
+
+}
+
+p.title {
+  font-style:italic;
+}
+
+li.catalog-list-item {
+  font-family: Tahoma,Arial,sans-serif;
+  font-size: 16px;
+  padding: 0.25em;
+  margin: 0.25em;
+  border: 2.3px solid grey;
+  border-radius: 3px;
+}
+
+.product-image {
+  margin: 0.25em;
+}
