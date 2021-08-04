@@ -4,7 +4,7 @@ console.log('this is catalog sam')
 
 const app = {
 
-  field_names : ['title','author','date','label','img'],
+  field_names : ['title','author','date','label','image'],
 
   data : { catalog_items: [] },
 
@@ -20,6 +20,7 @@ const app = {
     dom_node : document.querySelector('#parasol-catalog-selector'),
 
     show_item : function (valid_row) {
+      //
       let list_item = document.createElement('li')
       let img_tag = document.createElement('img')
       let info_box = document.createElement('div')
@@ -62,7 +63,8 @@ const app = {
     title_node: document.querySelector('#catalog-detail-title'),
 
     show : function (data_row) {
-      let title_text = document.createTextNode(data_row.title + ' &mdash; ' + data_row.author)
+      //
+      let title_text = document.createTextNode(data_row.title + ' | ' + data_row.author)
 
       this.meta_node.innerHTML = ''
       this.title_node.innerHTML = ''
@@ -104,6 +106,7 @@ const app = {
   },
 
   valid_row : function (obj) {
+    //
     this.field_names.forEach( (key) => {
       if ( !obj[key] ) {
         obj[key] = (key==='image') ?
@@ -114,6 +117,7 @@ const app = {
   }
 }
 
+// MAIN
 window.addEventListener('load', () => {
   xhttp = new XMLHttpRequest();
 
@@ -126,15 +130,19 @@ window.addEventListener('load', () => {
 
       resp = this.responseText
       console.log(resp)
-
+      // Render the DOM
       app.init( JSON.parse(resp), false)
+      // set a placeholder detail view
       app.detail.show( JSON.parse(resp)[0] )
-
-      app.list.dom_nodes.forEach( (list_item) => {
+      //
+      document.querySelectorAll('.catalog-list-item').forEach( (list_item) => {
         //
         list_item.addEventListener('click', function (event) {
           //
-          let data_obj = JSON.parse( this.getAttribute('meta'))
+          let data_obj = JSON.parse( this.getAttribute('meta') )
+
+          console.log('list item clicked')
+          console.log(data_obj)
           //
           app.list.shuffle( data_obj )
           app.detail.show( data_obj )

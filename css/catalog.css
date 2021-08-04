@@ -28,7 +28,8 @@ li.catalog-list-item {
   padding: 0.25em;
   margin: 0.25em;
   border: 2.3px solid grey;
-  border-radius: 3px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .product-image {
