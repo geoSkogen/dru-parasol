@@ -82,7 +82,7 @@ const app = {
       list_item.appendChild(img_tag)
       list_item.appendChild(info_box)
       list_item.setAttribute('meta',JSON.stringify(valid_row))
-      list_item.className = 'catalog-list-item flex-row flex-between'
+      list_item.className = 'catalog-list-item flex-row flex-start'
 
       anchor_tag.className = 'product-nav-anchor'
       anchor_tag.href = '#' + slug
