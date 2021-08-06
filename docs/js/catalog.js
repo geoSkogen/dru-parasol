@@ -143,7 +143,7 @@ const app = {
       Object.keys(valid_row).forEach( (key) => {
 
         if (key==='image') {
-          img_tag.src = 'modules/dru-parasol/img/' + valid_row[key] + '.jpg'
+          img_tag.src = 'img/' + valid_row[key] + '.jpg'
           //
         } else {
           if (key!='index' && key!='slug') {
@@ -198,7 +198,7 @@ const app = {
 
       this.meta_node.innerHTML = ''
       this.title_node.innerHTML = ''
-      this.img_node.src = 'modules/dru-parasol/img/' + data_row.image + '-detail.jpg'
+      this.img_node.src = 'img/' + data_row.image + '-detail.jpg'
       this.title_anchor.href = '#' + data_row.slug + '#detail'
 
       this.title_node.appendChild(title_div)
@@ -302,7 +302,7 @@ const app = {
 
           star_process : function (int) {
 
-            const path = 'modules/dru-parasol/img/gold-star.png'
+            const path = 'img/gold-star.png'
             const coeff = Number(int) * 20;
             const style_rule = "height:25px;width: " + coeff + "%;background: url( " +
              path + " ) repeat-x 0 0;background-position: 0 -25px;"
@@ -348,7 +348,7 @@ const app = {
 
         const xhttp = new XMLHttpRequest();
 
-        xhttp.open("GET", "modules/dru-parasol/js/fake-catalog-api/" + resource + ".json", true)
+        xhttp.open("GET", "data/fake-catalog-api/" + resource + ".json", true)
         xhttp.setRequestHeader("Content-Type", "application/json");
 
         xhttp.onreadystatechange = function() {
@@ -396,7 +396,7 @@ const app = {
     this.field_names.forEach( (key) => {
       if ( !obj[key] ) {
         obj[key] = (key==='image') ?
-          'modules/dru-parasol/img/placeholder.jpg' : '(not set)'
+          'img/placeholder.jpg' : '(not set)'
       } // some actual validation here
     })
     return obj
@@ -469,7 +469,7 @@ function register_app_events(reset) {
 window.addEventListener('load', () => {
   const xhttp = new XMLHttpRequest();
 
-  xhttp.open("GET", "modules/dru-parasol/js/fake-catalog-api.json", true)
+  xhttp.open("GET", "data/fake-catalog-api.json", true)
   xhttp.setRequestHeader("Content-Type", "application/json");
 
   xhttp.onreadystatechange = function() {
