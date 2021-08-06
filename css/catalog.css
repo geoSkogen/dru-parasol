@@ -8,14 +8,47 @@
   width: 300px;
 }
 
-@media only screen and (min-width: 772px) {
+@media only screen and (min-width: 764px) {
+  #relshell-scroll {
+    width: 500px;
+  }
+}
+
+@media only screen and (min-width: 956px) {
   #relshell-scroll {
     width: 90px;
   }
 }
 
+#relshell_modal {
+  width: 300px;
+}
+
+@media only screen and (min-width: 772px) {
+  #relshell_modal {
+    width: 600px;
+  }
+}
+
 .modal {
   position: absolute;
+}
+
+.close-modal {
+  font-size: 44px;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 0.25em;
+  z-index: 1300;
+}
+
+#parasol-detail-modal-wrapper {
+  width: 100%;
+}
+
+#product-detail-modal {
+  width: 95%;
+  display: none;
 }
 
 #parasol-catalog-wrapper {
@@ -41,6 +74,7 @@
   max-width: 400px;
   min-width: 400px;
   text-align: center;
+  cursor: pointer;
 }
 
 ul#parasol-catalog-selector {
@@ -73,6 +107,12 @@ p.title {
 }
 
 @media only screen and (min-width: 772px) {
+  #product-select-scroll-nav {
+    top: 0;
+  }
+}
+
+@media only screen and (min-width: 996px) {
   #product-select-scroll-nav {
     top: 60px;
   }
@@ -115,4 +155,29 @@ li.catalog-list-item {
   font-size: 14px;
   margin: 0.5em;
   padding: 0.5em;
+}
+
+ul.playlist, section.product-description, p.review-rating {
+  font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+}
+
+ul.playlist {
+  list-style: none;
+  font-size: 24px;
+}
+
+ul.playlist > li {
+  padding: 0.5em;
+}
+
+section.product-description {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 1em;
+}
+
+p.review-rating {
+  font-size: 20px;
+  font-weight: 500;
+  margin: 1em;
 }

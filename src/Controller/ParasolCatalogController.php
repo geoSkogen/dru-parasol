@@ -24,6 +24,7 @@ class ParasolCatalogController extends ControllerBase {
                             <div id="relshell-modal" class="relshell">
                               <article id="product-detail-modal" class="modal">
                                 <div class="flex-row flex-end"><div class="close-modal">&times;</div></div>
+                                <div id="product-detail-modal-interior"></div>
                               </article>
                             </div>
                           </div>
@@ -33,7 +34,9 @@ class ParasolCatalogController extends ControllerBase {
                             <div id="parasol-catalog-detail-wrapper" class-"flex-row flex-center">
 
                               <article id="parasol-catalog-detail" class="product-schema">
-                                <h2 id="catalog-detail-title" class="noshout"></h2>
+                                <a href="#" id="catalog-detail-title-anchor" class="product-nav-anchor">
+                                  <h2 id="catalog-detail-title" class="noshout"></h2>
+                                </a>
                                 <img src="#" id="catalog-detail-image" />
                                 <section id="product-detail-meta" class="wristband">
                                 <!-- -->

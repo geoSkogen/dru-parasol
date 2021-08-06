@@ -36,6 +36,17 @@ const app = {
       up: document.querySelector('#product-select-scroll-up') ,
       down: document.querySelector('#product-select-scroll-down')
     },
+    height_params : {
+      '.product-nav-anchor' : 171,
+      '.product-info-box' : 149,
+      '.product-image' : 125,
+      '.product-info-line' : 16
+    },
+
+
+    flex_item : function (index, appear) {
+
+    },
 
     scroll : function (arg,json) {
       const row_indices = {
@@ -103,16 +114,18 @@ const app = {
     title_node: document.querySelector('#catalog-detail-title'),
     title_anchor : document.querySelector('#catalog-detail-title-anchor'),
 
+    selected : {},
+
     show : function (data_row) {
       //
-      let title_text = document.createTextNode(data_row.title)
-      let subtitle_text = document.createTextNode(data_row.author)
       let title_div = document.createElement('div')
       let subtitle_div = document.createElement('div')
       let main_props = ['title','author','image','index','slug']
 
-      title_div.appendChild(title_text)
-      subtitle_div.appendChild(subtitle_text)
+      this.selected = data_row
+
+      title_div.appendChild(document.createTextNode(data_row.title))
+      subtitle_div.appendChild(document.createTextNode(data_row.author))
 
       this.meta_node.innerHTML = ''
       this.title_node.innerHTML = ''
@@ -140,18 +153,127 @@ const app = {
   modal : {
 
     dom_node: document.querySelector('#product-detail-modal'),
+    content_node: document.querySelector('#product-detail-modal-interior'),
     close_modal_node: document.querySelector('.close-modal'),
-    toggle_modal_node: document.querySelector('#catalog-detail-title-anchor'),
 
     show_info : function (data_row) {
-      this.dom_node.appendChild(document.createTextNode("This is the fake content"))
+
+      const modal_nodes = {
+        'description' : {
+
+          node: document.createElement('section'),
+          process : function (data_str) {
+            let wrapper = document.createElement('div')
+            this.node.appendChild(document.createTextNode(data_str))
+            this.node.className = 'product-description'
+            wrapper.className = 'flex-row flex-center'
+            wrapper.appendChild(this.node)
+            return wrapper
+          }
+        },
+        'playlist' : {
+
+          node :document.createElement('ul'),
+          process : function (data_arr) {
+            let wrapper = document.createElement('div')
+            data_arr.forEach( (datum) => {
+              let list_item = document.createElement('li')
+              list_item.appendChild( document.createTextNode( datum) )
+              this.node.appendChild( list_item)
+            })
+            this.node.className = 'playlist'
+            wrapper.className = 'flex-row flex-center'
+            wrapper.appendChild(this.node)
+            return wrapper
+          }
+        },
+        'rating' : {
+
+          process: function (assoc_arr) {
+
+            const text_frags = {
+              'rating' : {
+                pre: ' Rated ',
+                post: ''
+              },
+              'highest' : {
+                pre: ' out of ',
+                post: ' stars'
+              },
+              'total' : {
+                pre: ' based on ',
+                post: ' '
+              },
+              'source' : {
+                pre: '',
+                post: ' ratings.'
+              }
+            }
+
+            let wrapper = document.createElement('div')
+            const node = document.createElement('p')
+            let star_node = this.star_process(assoc_arr.rating)
+
+            Object.keys(assoc_arr).forEach( (key) => {
+
+              let span = document.createElement('span')
+
+              span.appendChild( document.createTextNode(
+                text_frags[key].pre + assoc_arr[key].toString() + text_frags[key].post
+              ))
+              span.className = 'review-aggregate-' + key
+              node.appendChild(span)
+            })
+            node.className = 'review-rating'
+            wrapper.className = 'flex-row flex-center'
+            wrapper.appendChild(star_node)
+            wrapper.appendChild(node)
+            return wrapper
+          },
+
+          star_process : function (int) {
+
+            const path = 'modules/dru-parasol/img/gold-star.png'
+            const coeff = Number(int) * 20;
+            const style_rule = "height:25px;width: " + coeff + "%;background: url( " +
+             path + " ) repeat-x 0 0;background-position: 0 -25px;"
+            const element = document.createElement('div')
+            const wrapper = document.createElement('div')
+
+            element.setAttribute('style',style_rule)
+            element.id = 'aggregate-review-rating-stars'
+            wrapper.style.width = '120px'
+            wrapper.appendChild(element)
+
+            return wrapper
+          }
+        }
+      }
+
+      this.content_node.innerHTML = ''
+
+      Object.keys( modal_nodes ).forEach( (prop) => {
+
+        var modal_el = {}
+
+        if (data_row[prop]) {
+          //
+          modal_el = modal_nodes[prop].process(data_row[prop])
+          this.content_node.appendChild(modal_el)
+        }
+      })
     },
 
     toggle : function (arg) {
 
       let resource = window.location.href.split('#')[1]
-      this.dom_node.style.display = arg ? 'block' : 'none'
-      app.dom_node.style.opacity = arg ? '0.2' : '1'
+      if (arg) {
+        app.toggle_background(false, 0.1, 1)
+        const appear = setTimeout( () => { this.dom_node.style.display = 'block' }, 100)
+      } else {
+        app.toggle_background(true, 0.1, 1)
+        this.dom_node.style.display = 'none'
+      }
 
       if (arg && !app.data.product_info[resource]) {
 
@@ -165,6 +287,8 @@ const app = {
           if (this.readyState == 4 && this.status == 200) {
 
             resp = this.responseText
+
+            app.data.product_info[resource] = resp
             //
             app.modal.show_info(JSON.parse(resp))
           }
@@ -207,6 +331,33 @@ const app = {
       } // some actual validation here
     })
     return obj
+  },
+
+  stray_light : function (n,arg) {
+    this.dom_node.style.opacity = n
+    n += (arg) ? 0.025 : -0.025
+    n = (n <= 0.02) ? 0 : n
+    n = (n >= 0.98) ? 1 : n
+    return n
+  },
+
+  toggle_background : function (appear,floor,ceiling) {
+    var n = appear? floor : ceiling
+    var effect
+    effect = setInterval( () => {
+
+      n = this.stray_light(n,appear)
+      if (appear) {
+        if (n>=ceiling) {
+          clearInterval(effect)
+        }
+      } else {
+        if (n<=floor) {
+          clearInterval(effect)
+        }
+      }
+
+    }, 21.32)
   }
 }
 
@@ -230,10 +381,18 @@ function register_app_events(reset) {
     //
     ['up','down'].forEach( (dir) => {
 
-      app.select.scroll_nodes[dir].addEventListener('click', function () {
+      app.select.scroll_nodes[dir].addEventListener('click', function (event) {
       //  console.log('got scroll node click ' + dir)
         app.select.scroll(dir,null)
       })
+    })
+
+    app.detail.title_anchor.addEventListener('click', function (event) {
+      app.modal.toggle(true)
+    })
+
+    app.modal.close_modal_node.addEventListener('click', function (event) {
+      app.modal.toggle(false)
     })
   }
 }

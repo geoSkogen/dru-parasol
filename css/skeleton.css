@@ -24,12 +24,15 @@ nav.contextual-region ul, #block-wafer-breadcrumbs > nav > ol {
   font-size: 24px;
 }
 
-
 h1.js-quickedit-page-title {
-  font-style: italic;
   opacity: 0.44;
   font-size: 28px;
   text-align: center;
+  text-transform: uppercase;
+  font-family: Tahoma, Arial, Helvetica, sans-serif;
+  font-weight: 200;
+  letter-spacing: 0.2em;
+
 }
 
 h1.translate {
@@ -67,7 +70,11 @@ h1.translate {
 }
 
 .flex-start {
-  justify-content: flex start;
+  justify-content: flex-start;
+}
+
+.flex-end {
+  justify-content: flex-end;
 }
 
 .flex-between {
