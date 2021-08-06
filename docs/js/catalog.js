@@ -10,7 +10,8 @@ const app = {
 
   dom_node: document.querySelector('#parasol-catalog-wrapper') ,
 
-  list : { dom_nodes: [],
+  list : {
+    dom_nodes: [],
 
     shuffle: function (data_row) {
 
@@ -36,6 +37,8 @@ const app = {
       up: document.querySelector('#product-select-scroll-up') ,
       down: document.querySelector('#product-select-scroll-down')
     },
+
+    flex_tally : 0,
 
     flex_item : function (index, appear) {
 
@@ -68,12 +71,13 @@ const app = {
             if (appear) { p.style.fontSize = '0px' }
 
             this.toggle_size(
-              p,                         // target element
-              appear,                    // appear or disappear?
-              'fontSize',                     // css property to increment
-              unit,                      // degree by whih to inrement
-              0,                         // lowest desired value
-              flex_nodes[node_key].height// highest desired value
+              p,                          // target element
+              appear,                     // appear or disappear?
+              'fontSize',                 // css property to increment
+              unit,                       // degree by whih to inrement
+              0,                          // lowest desired value
+              flex_nodes[node_key].height,// highest desired value
+              this_item                   // wrapper element
             )
 
           })
@@ -86,33 +90,73 @@ const app = {
             'height',                  // css property to increment
             unit,                      // degree by whih to icnrement
             0,                         // lowest desired value
-            flex_nodes[node_key].height// highest desired value
+            flex_nodes[node_key].height,// highest desired value
+            this_item                   // wrapper element
           )
 
         }
       })
     },
 
-    toggle_size : function (node,appear,denom,unit,floor,ceiling) {
+    toggle_size : function (node,appear,denom,unit,floor,ceiling,root_node) {
       var n = appear? floor : ceiling
       var effect
+      root_node.style.display = 'block'
       effect = setInterval( () => {
 
-        node.style[denom] = n.toString() + 'px'
         n += (appear) ? unit : -unit
+        node.style[denom] = n.toString() + 'px'
 
         if (appear) {
           if (n>=ceiling) {
+
             clearInterval(effect)
+            this.flex_tally++
+
+            if (this.flex_tally===6) {
+
+              var i = 0.0
+              var grow
+              this.flex_tally = 0
+              grow  = setInterval( () => {
+
+                i += 0.01
+                root_node.querySelector('.catalog-list-item').style.paddingTop = i.toString() + 'em'
+                root_node.querySelector('.catalog-list-item').style.paddingBottom = i.toString() + 'em'
+
+                if (i >= 0.5) {
+                  clearInterval(grow)
+                }
+              }, 2.5)
+            }
           }
         } else {
           if (n<=floor) {
+
             clearInterval(effect)
-            node.style.display = 'none'
+            this.flex_tally++
+
+            if (this.flex_tally===6) {
+
+              var i = 0.5
+              var shrink
+              this.flex_tally = 0
+              shrink  = setInterval( () => {
+
+                i -= 0.01
+                root_node.querySelector('.catalog-list-item').style.paddingTop = i.toString() + 'em'
+                root_node.querySelector('.catalog-list-item').style.paddingBottom = i.toString() + 'em'
+
+
+                if (i <= 0) {
+                  clearInterval(shrink)
+                  root_node.style.display = 'none'
+                }
+              }, 2.5)
+            }
           }
         }
-
-      }, 5 )
+      }, 2.5 )
     },
 
     scroll : function (arg,json) {
