@@ -38,62 +38,68 @@ const app = {
       down: document.querySelector('#product-select-scroll-down')
     },
 
+    get_flex_nodes :  function (index) {
+
+      const parent_item = document.querySelectorAll('.product-nav-anchor')[index+1]
+      const collection =
+      { this_item : parent_item,
+        item : {
+          node: parent_item.querySelector('.catalog-list-item'),
+          height: 151
+        },
+        image: {
+          node: parent_item.querySelector('.product-image'),
+          height: 125
+        },
+        lines : {
+          nodes : parent_item.querySelectorAll('.product-info-line'),
+          height: 16
+        }
+      }
+      return collection
+    },
+
     flex_tally : 0,
 
     flex_item : function (index, appear) {
 
-      const this_item = document.querySelectorAll('.product-nav-anchor')[index+1]
-
-      const flex_nodes = {
-        item : {
-          node: this_item.querySelector('.catalog-list-item'),
-          height: 151
-        },
-        image: {
-          node: this_item.querySelector('.product-image'),
-          height: 125
-        },
-        lines : {
-          nodes : this_item.querySelectorAll('.product-info-line'),
-          height: 16
-        }
-      }
+      const flex_nodes = this.get_flex_nodes(index)
 
       Object.keys( flex_nodes ).forEach( ( node_key ) => {
+        if (flex_nodes[node_key].node || flex_nodes[node_key].nodes) {
 
-        let unit = flex_nodes[node_key].height/100
+          let unit = flex_nodes[node_key].height/100
 
-        if (node_key==='lines') {
-          //
+          if (node_key==='lines') {
+            //
+            flex_nodes[node_key].nodes.forEach( (p) => {
 
-          flex_nodes[node_key].nodes.forEach( (p) => {
+              if (appear) { p.style.fontSize = '0px' }
 
-            if (appear) { p.style.fontSize = '0px' }
+              this.toggle_size(
+                p,                          // target element
+                appear,                     // appear or disappear?
+                'fontSize',                 // css property to increment
+                unit,                       // degree by whih to inrement
+                0,                          // lowest desired value
+                flex_nodes[node_key].height,// highest desired value
+                flex_nodes.this_item                   // wrapper element
+              )
+            })
+          } else {
+
+            if (appear) { flex_nodes[node_key].node.style.height = '0px' }
 
             this.toggle_size(
-              p,                          // target element
-              appear,                     // appear or disappear?
-              'fontSize',                 // css property to increment
-              unit,                       // degree by whih to inrement
-              0,                          // lowest desired value
+              flex_nodes[node_key].node, // target element
+              appear,                    // appear or disappear?
+              'height',                  // css property to increment
+              unit,                      // degree by whih to icnrement
+              0,                         // lowest desired value
               flex_nodes[node_key].height,// highest desired value
-              this_item                   // wrapper element
+              flex_nodes.this_item                   // wrapper element
             )
-
-          })
-        } else {
-          if (appear) { flex_nodes[node_key].node.style.height = '0px' }
-
-          this.toggle_size(
-            flex_nodes[node_key].node, // target element
-            appear,                    // appear or disappear?
-            'height',                  // css property to increment
-            unit,                      // degree by whih to icnrement
-            0,                         // lowest desired value
-            flex_nodes[node_key].height,// highest desired value
-            this_item                   // wrapper element
-          )
-
+          }
         }
       })
     },
@@ -107,70 +113,65 @@ const app = {
         n += (appear) ? unit : -unit
         node.style[denom] = n.toString() + 'px'
 
-        if (appear) {
-          if (n>=ceiling) {
+        if (appear && n>=ceiling || !appear && n<=floor) {
 
-            clearInterval(effect)
-            this.flex_tally++
+          clearInterval(effect)
+          this.flex_tally++
 
-            if (this.flex_tally===6) {
+          if (this.flex_tally===6) {
+            var i = (appear) ? 0.0 : 0.5
+            var aftereffect
+            this.flex_tally = 0
+            aftereffect  = setInterval( () => {
 
-              var i = 0.0
-              var grow
-              this.flex_tally = 0
-              grow  = setInterval( () => {
+              i += (appear) ? 0.01 : -0.01
+              root_node.querySelector('.catalog-list-item').style.paddingTop = i.toString() + 'em'
+              root_node.querySelector('.catalog-list-item').style.paddingBottom = i.toString() + 'em'
 
-                i += 0.01
-                root_node.querySelector('.catalog-list-item').style.paddingTop = i.toString() + 'em'
-                root_node.querySelector('.catalog-list-item').style.paddingBottom = i.toString() + 'em'
-
-                if (i >= 0.5) {
-                  clearInterval(grow)
-                }
-              }, 2.5)
-            }
-          }
-        } else {
-          if (n<=floor) {
-
-            clearInterval(effect)
-            this.flex_tally++
-
-            if (this.flex_tally===6) {
-
-              var i = 0.5
-              var shrink
-              this.flex_tally = 0
-              shrink  = setInterval( () => {
-
-                i -= 0.01
-                root_node.querySelector('.catalog-list-item').style.paddingTop = i.toString() + 'em'
-                root_node.querySelector('.catalog-list-item').style.paddingBottom = i.toString() + 'em'
-
-
-                if (i <= 0) {
-                  clearInterval(shrink)
-                  root_node.style.display = 'none'
-                }
-              }, 2.5)
-            }
+              if (appear && i >= 0.5 || !appear && i <= 0.0) {
+                clearInterval(aftereffect)
+              }
+            }, 2.5)
           }
         }
       }, 2.5 )
     },
 
-    scroll : function (arg,json) {
-      const row_indices = {
-        'up' : app.data.catalog_items.length-1,
-        'down' : 1
-      }
+    pre_shrink : function (index) {
+      const flex_nodes = this.get_flex_nodes(index)
 
+      Object.keys( flex_nodes ).forEach( ( node_key ) => {
+        let prop
+        if (flex_nodes[node_key].node || flex_nodes[node_key].nodes) {
+
+          prop = (node_key=='lines') ? 'fontSize' : 'height'
+
+          if (node_key=='lines') {
+
+            flex_nodes[node_key].nodes.forEach( (p) => {
+              p.style[prop] = '0px'
+            })
+          } else {
+            flex_nodes[node_key].node.style[prop] = '0px'
+          }
+        }
+      })
+    },
+
+    scroll : function (arg,json) {
+
+      const row_indices = {
+        'down' : app.data.catalog_items.length-1,
+        'up' : 1
+      }
       const data_row = json ? JSON.parse(json) : JSON.parse(
         document.querySelectorAll('.catalog-list-item')[row_indices[arg]].getAttribute('meta')
       )
-
       app.list.shuffle(data_row)
       app.init(app.data.catalog_items, true)
+      if (arg==='down') {
+
+      }
       register_app_events(true)
     },
 
@@ -496,7 +497,54 @@ function register_app_events(reset) {
 
       app.select.scroll_nodes[dir].addEventListener('click', function (event) {
       //  console.log('got scroll node click ' + dir)
-        app.select.scroll(dir,null)
+        var delay
+        var node
+        var clone
+        var length
+        const flex_vals = {
+          'up' : false,
+          'down' : true
+        }
+
+        if (dir==='up') {
+          // copy the fiest catalog menu item
+          node = document.querySelectorAll('.product-nav-anchor')[1]
+          clone = node.cloneNode(true)
+          // add the copy of former first menu item to the bottom of the list
+          app.select.dom_node.appendChild(clone)
+          length = document.querySelectorAll('.product-nav-anchor').length
+          // last menu item appears collapsed then let grow to full size
+          app.select.pre_shrink(length-2)
+          app.select.flex_item(length-2, true)
+          // collapse the top menu item
+          app.select.flex_item(0, flex_vals[dir])
+          // 0.6 second delay while menu items transform before menu toggle
+          delay = setTimeout( () => {
+            // reset menu order & view
+            app.select.scroll(dir,null)
+          }, 600)
+
+        } else if (dir==='down') {
+          length = document.querySelectorAll('.product-nav-anchor').length
+          // copy the last catalog menu item
+          node = document.querySelectorAll('.product-nav-anchor')[length-1]
+          // reset menu order & view
+          app.select.scroll(dir,null)
+          // first menu item appears collapsed then let grow to full size
+          app.select.pre_shrink(0)
+          app.select.flex_item(0,true)
+          // add the copy of former final menu item to the bottom of the list
+          app.select.dom_node.appendChild(node)
+          // collapse the bottom menu item
+          app.select.flex_item(
+            length-1,
+            false
+          )
+          // 0.6 second delay while bottom item collapses before removing it
+          delay = setTimeout( () => {
+            app.select.dom_node.removeChild(node)
+          }, 600)
+        }
       })
     })
 
