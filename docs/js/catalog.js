@@ -169,9 +169,7 @@ const app = {
       )
       app.list.shuffle(data_row)
       app.init(app.data.catalog_items, true)
-      if (arg==='down') {
-
-      }
+      
       register_app_events(true)
     },
 
@@ -382,7 +380,7 @@ const app = {
 
       let resource = app.detail.selected.slug
       if (arg) {
-        app.toggle_background(false, 0.1, 1)
+
         const appear = setTimeout( () => { this.dom_node.style.display = 'block' }, 100)
       } else {
         app.toggle_background(true, 0.1, 1)
@@ -447,7 +445,7 @@ const app = {
     return obj
   },
 
-  stray_light : function (n,arg) {
+  grade_light : function (n,arg) {
     this.dom_node.style.opacity = n
     n += (arg) ? 0.025 : -0.025
     n = (n <= 0.02) ? 0 : n
@@ -460,15 +458,10 @@ const app = {
     var effect
     effect = setInterval( () => {
 
-      n = this.stray_light(n,appear)
-      if (appear) {
-        if (n>=ceiling) {
-          clearInterval(effect)
-        }
-      } else {
-        if (n<=floor) {
-          clearInterval(effect)
-        }
+      n = this.grade_light(n,appear)
+      if (appear && n>=ceiling || !appear && n<=floor) {
+      //
+        clearInterval(effect)
       }
 
     }, 21.32)
@@ -549,10 +542,14 @@ function register_app_events(reset) {
     })
 
     app.detail.title_anchor.addEventListener('click', function (event) {
+
+      app.toggle_background(false, 0.1, 1)
       app.modal.toggle(true)
     })
 
     app.modal.close_modal_node.addEventListener('click', function (event) {
+
+      app.toggle_background(true, 0.1, 1)
       app.modal.toggle(false)
     })
   }

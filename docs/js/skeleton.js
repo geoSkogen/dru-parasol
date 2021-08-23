@@ -96,7 +96,7 @@ window.addEventListener('load', function () {
 
   text_nodes.forEach( (node) => {
 
-     timeout_vals.push(330/Math.random())
+     timeout_vals.push(110/Math.random())
 
      toggle_limits.push(8)
 

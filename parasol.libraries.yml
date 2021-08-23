@@ -7,7 +7,13 @@ parasol_catalog:
   version: 1.0
   js:
     js/fake-catalog-api.json: {}
-    js/catalog.js: {}
+    js/select.js : {}
+    js/detail.js : {}
+    js/modal.js : {}
+    js/app.js: {}
+    js/main.js : {}
+
+
   css:
     theme:
       css/skeleton.css: {}
