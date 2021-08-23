@@ -23,7 +23,7 @@ window.addEventListener('load', () => {
 
   const xhttp = new XMLHttpRequest();
 
-  xhttp.open("GET", "fake-catalog-api.json", true)
+  xhttp.open("GET", "/fake-catalog-api.json", true)
   xhttp.setRequestHeader("Content-Type", "application/json");
 
   xhttp.onreadystatechange = function() {

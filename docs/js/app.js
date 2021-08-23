@@ -160,7 +160,7 @@ class App {
     this.field_names.forEach( (key) => {
       if ( !obj[key] ) {
         obj[key] = (key==='image') ?
-          'modules/dru-parasol/img/placeholder.jpg' : '(not set)'
+          'img/placeholder.jpg' : '(not set)'
       } // some actual validation here
     })
     return obj
@@ -204,7 +204,7 @@ class App {
       const xhttp = new XMLHttpRequest();
       const self = this
 
-      xhttp.open("GET", "data/fake-catalog-api/" + resource + ".json", true)
+      xhttp.open("GET", "/data/fake-catalog-api/" + resource + ".json", true)
       xhttp.setRequestHeader("Content-Type", "application/json");
 
       xhttp.onreadystatechange = function() {
