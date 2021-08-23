@@ -24,7 +24,7 @@ class Detail {
 
     this.meta_node.innerHTML = ''
     this.title_node.innerHTML = ''
-    this.img_node.src = 'img/' + data_row.image + '-detail.jpg'
+    this.img_node.src = 'modules/dru-parasol/img/' + data_row.image + '-detail.jpg'
     this.title_anchor.href = '#' + data_row.slug + '#detail'
 
     this.title_node.appendChild(title_div)

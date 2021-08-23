@@ -142,7 +142,7 @@ class Select {
     Object.keys(valid_row).forEach( (key) => {
 
       if (key==='image') {
-        img_tag.src = 'img/' + valid_row[key] + '.jpg'
+        img_tag.src = 'modules/dru-parasol/img/' + valid_row[key] + '.jpg'
         //
       } else {
         if (key!='index' && key!='slug') {
