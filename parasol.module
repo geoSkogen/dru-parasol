@@ -1,0 +1,17 @@
+<?php
+
+use Drupal\parasol\Event\UserLoginEvent;
+
+/**
+ * Implements hook_user_login().
+ */
+ 
+function parasol_user_login ($account) {
+  $event = new UserLoginEvent($account);
+
+  $event_dispatcher = \Drupal::service('event_dispatcher');
+  $event_dispatcher->dispatch($event, UserLoginEvent::EVENT_NAME);
+
+}
+
+?>

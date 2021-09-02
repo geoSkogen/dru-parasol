@@ -1,0 +1,12 @@
+services:
+  # Name of this service.
+  parasol_config_events_subscriber:
+    # Event subscriber class that will listen for the events.
+    class: '\Drupal\parasol\EventSubscriber\ConfigEventsSubscriber'
+    # Tagged as an event_subscriber to register this subscriber with the event_dispatch service.
+    tags:
+      - { name: 'event_subscriber' }
+  parasol_user_login:
+    class: '\Drupal\parasol\EventSubscriber\UserLoginSubscriber'
+    tags:
+      - { name: 'event_subscriber' }
