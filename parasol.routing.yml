@@ -14,3 +14,21 @@ parasol.catalog_page:
     _title: 'Ghost in a Jar'
   requirements:
     _permission: 'access content'
+
+
+#parasol.monologue_generator:
+#  path: '/monologues/{paragraphs}/{phrases}'
+#  defaults:
+#    _controller: '\Drupal\parasol\Controller\ParasolMonologueController::initView'
+#    _title: 'Birds Chirp.'
+#  requirements:
+#    _permission: 'access content'
+
+
+parasol.monologue_config:
+  path: '/admin/config/development/parasol'
+  defaults:
+    _form: '\Drupal\parasol\Form\ParasolMonologueConfigForm'
+    _title: 'Birds Chirp.'
+  requirements:
+    _permission: 'administer site configuration'

@@ -1,17 +1,37 @@
 <?php
+/*
+* Implements hook_theme();
+*/
+use Drupal\Core\Routing\RouteMatchInterface;
 
-use Drupal\parasol\Event\UserLoginEvent;
+function parasol_theme($existing,$type,$theme,$path) {
 
-/**
- * Implements hook_user_login().
- */
- 
-function parasol_user_login ($account) {
-  $event = new UserLoginEvent($account);
+  $variables =
+  ['parsol'=> [
+    'variables' => [
+      'source_text' => NULL,
+     ],
+     'template' => 'parasol'
+    ]
+  ];
 
-  $event_dispatcher = \Drupal::service('event_dispatcher');
-  $event_dispatcher->dispatch($event, UserLoginEvent::EVENT_NAME);
+  return $variables;
+}
 
+function template_preprocess_parasol(&$variables) {
+
+  $marks = ['. ', '! ', '? ', ' . . . ', ': ', '; '];
+
+  for ($i = 0; $i < count($variables['source_text']); $i++) {
+
+    $phrase_arr = explode('. ', $variables['source_text'][$i]);
+
+    for($j = 0; $j < count($phrase_arr)-1; $j++) {
+      $phrase_arr[$i] .= $marks[floor(mt_rand(0, count($marks)-1))];
+    }
+  }
+
+  $variables['source_text'[$i]] = implode('',$phrase_arr);
 }
 
 ?>
