@@ -4,9 +4,15 @@ namespace Drupal\parasol\Controller;
 
 use Drupal\Component\Utility\Html;
 
+/**
+*
+* @param string $paragraphs
+* @param string $phrases
+*
+*/
 class ParasolMonologueController {
 
-  public function initView($paragraphs, $phrases) {
+  public function generate($paragraphs, $phrases) {
     $config = \Drupal::config('parasol.settings');
     $title = $config->get('parasol.page_title');
     $text = $config->get('parasol.source_text');
@@ -30,7 +36,7 @@ class ParasolMonologueController {
       }
       $element['#source_text'][] = Html::escape($this_paragraph);
     }
-    $element['#title'] = Html::escape($page_title);
+    $element['#title'] = Html::escape($title);
     $element['#theme'] = 'parasol';
 
     return $element;

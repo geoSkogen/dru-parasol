@@ -1,8 +1,8 @@
 parasol.content_page:
-  path: '/parasol'
+  path: '/hello-content'
   defaults:
     _controller: '\Drupal\parasol\Controller\ParasolController::helloContent'
-    _title: 'The Parasol Module - the /parasol route'
+    _title: 'The Parasol Module - the /hello-content route'
   requirements:
     _permission: 'access content'
 
@@ -16,16 +16,16 @@ parasol.catalog_page:
     _permission: 'access content'
 
 
-#parasol.monologue_generator:
-#  path: '/monologues/{paragraphs}/{phrases}'
-#  defaults:
-#    _controller: '\Drupal\parasol\Controller\ParasolMonologueController::initView'
-#    _title: 'Birds Chirp.'
-#  requirements:
-#    _permission: 'access content'
+parasol.generate:
+  path: '/parasol/generate/{paragraphs}/{phrases}'
+  defaults:
+    _controller: '\Drupal\parasol\Controller\ParasolMonologueController::generate'
+    _title: 'Birds Chirp.'
+  requirements:
+    _permission: 'access content'
 
 
-parasol.monologue_config:
+parasol.form:
   path: '/admin/config/development/parasol'
   defaults:
     _form: '\Drupal\parasol\Form\ParasolMonologueConfigForm'

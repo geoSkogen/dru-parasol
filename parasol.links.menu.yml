@@ -5,9 +5,9 @@ parasol.admin:
   route_name: parasol.content_page
   weight: 100
 
-#parasol.form:
-#  title: 'Parasol Monologue Settings'
-#  description: 'Birds Chirp.  Birds Chirp.  Birds Chirp.  Brids Chirp.'
-#  parent: system.admin_config_development
-#  route_name: parasol.monologue_generator
-#  weight: 100
+parasol.form:
+  title: 'Parasol Monologue Settings'
+  description: 'Birds Chirp.  Birds Chirp.  Birds Chirp.  Brids Chirp.'
+  parent: system.admin_config_development
+  route_name: parasol.form
+  weight: 100
