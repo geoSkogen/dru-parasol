@@ -10,7 +10,7 @@ parasol.settings:
           label: 'Monologue.'
         source_text:
           type: text
-          label: 'Brids Chirp.'
+          label: 'Brids Chirp. Birds Chirp. Birds Chirp. Birds Chirp.'
 parasol.settings.monologue_block:
   type: block_settings
   label: 'Monologue Block'
