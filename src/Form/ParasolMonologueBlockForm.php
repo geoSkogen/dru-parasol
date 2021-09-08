@@ -3,7 +3,7 @@
 namespace Drupal\parasol\Form;
 
 use Drupal\Core\Form\FormBase;
-use Drupal\Core\From\FormStateInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 
 class ParasolMonologueBlockForm extends FormBase {
@@ -12,7 +12,7 @@ class ParasolMonologueBlockForm extends FormBase {
     return 'parasol_monologue_form';
   }
 
-  public BuildForm(array $form, FormStateInterface $form_state) {
+  public function BuildForm(array $form, FormStateInterface $form_state) {
     $options = array_combine(range(1, 10), range(1, 10));
     $form['paragraphs'] = [
       '#type' => 'select',
@@ -34,12 +34,12 @@ class ParasolMonologueBlockForm extends FormBase {
       '#title'=> $this->t('go')
     ];
 
-    error_log('PARASOL-MONOLOGUE-FORM - build object');
-    error_log(print_r($form), true);
+    //error_log('PARASOL-MONOLOGUE-FORM - build object');
+    //error_log(print_r($form), true);
     return $form;
   }
 
-  public function validateForm(array &$form, FormStateInterface $form_State) {
+  public function validateForm(array &$form, FormStateInterface $form_state) {
     $err_msg = '';
     $phrases = $form_state->getValue('phrases');
 
@@ -60,10 +60,10 @@ class ParasolMonologueBlockForm extends FormBase {
     }
   }
 
-  public submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state) {
     $form_state->setRedirect('parasol.generate', [
-      'paragraphs' => $form_state['paragraphs'];
-      'phrases' => $form_state['phrases'];
+      'paragraphs' => $form_state->getValue('paragraphs'),
+      'phrases' => $form_state->getValue('phrases')
     ]);
   }
 
