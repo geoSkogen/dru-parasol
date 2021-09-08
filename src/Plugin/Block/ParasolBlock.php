@@ -16,9 +16,6 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class ParasolBlock extends BlockBase {
 
-  /**
-   * {@inheritdoc}
-   */
   public function build() {
     $config = $this->getConfiguration();
 
@@ -39,6 +36,7 @@ class ParasolBlock extends BlockBase {
     return $attach;
   }
 
+
   public function blockForm($form, FormStateInterface $form_state) {
    $form = parent::blockForm($form, $form_state);
 
@@ -54,18 +52,15 @@ class ParasolBlock extends BlockBase {
    return $form;
  }
 
- /**
- * {@inheritdoc}
- */
+
  public function blockSubmit($form, FormStateInterface $form_state) {
    parent::blockSubmit($form, $form_state);
    $values = $form_state->getValues();
    $this->configuration['parasol_block_name'] = $values['parasol_block_name'];
  }
 
- /**
-  * {@inheritdoc}
-  */
+
+
  public function blockValidate($form, FormStateInterface $form_state) {
    if($form_state->getValue('parasol_block_name') === ''){
      $form_state->setErrorByName('parasol_block_name', $this->t('Field cannot be blank'));
