@@ -21,4 +21,13 @@ parasol_catalog:
       https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css: {
         type: external, minified: true
       }
-      #css/fontawesome/css/all.css: {}
+
+parasol_generator:
+  version: 1.0
+  js:
+    js/syllablemill.js: {}
+    js/frontend.js : {}
+  css:
+    theme:
+      css/skeleton.css: {}
+      css/syllablemill.css: {}

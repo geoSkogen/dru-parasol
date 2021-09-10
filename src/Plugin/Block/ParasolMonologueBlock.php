@@ -16,7 +16,7 @@ use Drupal\Core\Session\AccountInterface;
 class ParasolMonologueBlock extends BlockBase {
 
   public function build() {
-    error_log('PARASOL-MONOLOGUE-BLOCK -form build call');
+  
     return \Drupal::formBuilder()->getForm('Drupal\parasol\Form\ParasolMonologueBlockForm');
   }
 

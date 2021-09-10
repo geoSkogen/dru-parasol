@@ -13,6 +13,7 @@ class ParasolMonologueBlockForm extends FormBase {
   }
 
   public function BuildForm(array $form, FormStateInterface $form_state) {
+    //
     $options = array_combine(range(1, 10), range(1, 10));
     $form['paragraphs'] = [
       '#type' => 'select',
@@ -34,8 +35,6 @@ class ParasolMonologueBlockForm extends FormBase {
       '#title'=> $this->t('go')
     ];
 
-    //error_log('PARASOL-MONOLOGUE-FORM - build object');
-    //error_log(print_r($form), true);
     return $form;
   }
 

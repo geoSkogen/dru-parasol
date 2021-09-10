@@ -15,6 +15,13 @@ parasol.catalog_page:
   requirements:
     _permission: 'access content'
 
+parasol.generator:
+  path: '/parasol/generate'
+  defaults:
+    _form: '\Drupal\parasol\Form\ParasolSyllableMillForm'
+    _title: 'Syllable Mill'
+  requirements:
+    _permission: 'access content'
 
 parasol.generate:
   path: '/parasol/generate/{paragraphs}/{phrases}'

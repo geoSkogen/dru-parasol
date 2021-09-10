@@ -11,6 +11,30 @@ parasol.settings:
         source_text:
           type: text
           label: 'Brids Chirp. Birds Chirp. Birds Chirp. Birds Chirp.'
+
+parasol.syllablemill:
+  type: config_object
+  label: "Parasol Syllablemill"
+  mapping:
+    parasol:
+      type: mapping
+      mapping:
+        syllables_qty:
+          type: text
+          label: 'syllables'
+        syllables_cap:
+          type: text
+          label: 'max syllables'
+        words_cap:
+          type: text
+          label: 'max words'
+        phrases_cap:
+          type: text
+          label: 'max phrases'
+        paragraphs_qty:
+          type: text
+          label: 'paragraphs'
+
 parasol.settings.monologue_block:
   type: block_settings
   label: 'Monologue Block'

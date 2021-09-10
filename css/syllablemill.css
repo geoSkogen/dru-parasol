@@ -1,0 +1,122 @@
+.flex-row {
+  display: flex;
+  flex-flow: row wrap;
+
+}
+
+.flex-center {
+  justify-content: center;
+
+}
+
+
+.flex-end {
+  justify-content: flex-end;
+
+}
+
+#app {
+
+  font-family: Arial, sans-serif;
+}
+
+#sm-title, #sm-lorem, .section-header {
+  text-align: center;
+}
+
+.newsprint {
+  font-family:"Times New Roman", serif
+}
+
+.sm-section {
+  margin: 0 4em;
+  padding: 0.5em 1em;
+}
+
+#params-wrapper {
+  padding: 1.5em;
+  margin: 0.5em;
+  border: 1.33px solid gainsboro;
+}
+
+.roomy {
+  padding: 0.66em;
+  margin: 1em;
+  font-size: 20px;
+  border: 2.66px solid cornflowerblue;
+  border-radius: 3.33px;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.block-label {
+  font-weight: 600;
+}
+
+.digits {
+  width: 2.33em;
+}
+
+.modal {
+  display: none;
+}
+
+.fake-button {
+  padding: 1em;
+  margin: 1em;
+  background-color: black;
+  opacity: 0.66;
+  border-radius: 3.33px;
+  color: white;
+  display: block;
+  max-width: 6em;
+  font-weight: 600;
+}
+
+.relshell {
+  position: relative;
+}
+
+#modal {
+  display: none;
+  position: absolute;
+  top: -700px;
+  left: -192px;
+}
+
+#close-modal {
+  font-size: 40px;
+  font-weight: 700px;
+  padding: 12px;
+  display: block;
+  cursor: pointer;
+}
+
+#clipboard-icon {
+  font-size: 36px;
+  cursor: pointer;
+}
+
+#sm-output {
+  width: 300px;
+  height: 600px;
+}
+
+@media only screen and (min-width: 760px) {
+  #sm-output {
+    width: 600px;
+  }
+
+  #modal {
+    display: block;
+    position: static;
+  }
+
+  #close-modal {
+    display: none;
+  }
+
+  .fake-button {
+    display: none;
+  }
+}
